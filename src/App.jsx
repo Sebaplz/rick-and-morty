@@ -25,11 +25,6 @@ function App() {
 
   return (
     <>
-      <header className="text-center p-4">
-        <h1 className="text-3xl md:text-5xl font-bold text-white">
-          Rick and Morty API
-        </h1>
-      </header>
       <main className="text-white">
         {isLoading ? (
           <Spinner />

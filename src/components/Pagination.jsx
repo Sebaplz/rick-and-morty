@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
 
 Pagination.propTypes = {
   info: PropTypes.shape({
@@ -12,15 +11,15 @@ Pagination.propTypes = {
 };
 
 function Pagination({ info, setUrl }) {
-  const [numberPage, setNumberPage] = useState(1);
+  const pageNumber = info.next ? info.next.split("page=")[1] : info.pages + 1;
+
   return (
     <div className="flex justify-between mx-8 xl:mx-20 items-center flex-wrap gap-4">
       {info.prev != null ? (
         <button
-          className="p-2 bg-cyan-700 rounded"
+          className="p-2 bg-cyan-700 rounded hover:opacity-40"
           onClick={() => {
             setUrl(info.prev);
-            setNumberPage(numberPage - 1);
           }}
         >
           ⬅️ Prev
@@ -30,7 +29,6 @@ function Pagination({ info, setUrl }) {
           className="p-2 bg-cyan-700 rounded disabled:opacity-40"
           onClick={() => {
             setUrl(info.prev);
-            setNumberPage(numberPage - 1);
           }}
           disabled
         >
@@ -39,21 +37,20 @@ function Pagination({ info, setUrl }) {
       )}
       <div className="flex gap-4">
         <h2>
+          Characters: <span className="font-bold">{info.count}</span>
+        </h2>
+        <h2>
           Total pages: <span className="font-bold">{info.pages}</span>
         </h2>
         <h2>
-          Page: <span className="font-bold">{numberPage}</span>
-        </h2>
-        <h2>
-          Characters: <span className="font-bold">{info.count}</span>
+          Page: <span className="font-bold">{pageNumber - 1}</span>
         </h2>
       </div>
       {info.next != null ? (
         <button
-          className="p-2 bg-cyan-700 rounded"
+          className="p-2 bg-cyan-700 rounded hover:opacity-40"
           onClick={() => {
             setUrl(info.next);
-            setNumberPage(numberPage + 1);
           }}
         >
           Next ➡️
@@ -63,7 +60,6 @@ function Pagination({ info, setUrl }) {
           className="p-2 bg-cyan-700 rounded disabled:opacity-40"
           onClick={() => {
             setUrl(info.next);
-            setNumberPage(numberPage + 1);
           }}
           disabled
         >
